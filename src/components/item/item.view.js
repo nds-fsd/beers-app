@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Item = ({ beerData }) => (
+const Item = ({ beerData, onClick }) => (
   <>
-    <p>{beerData.name}({beerData.abv})</p>
+    <p onClick={() => onClick(beerData)}>{beerData.name}({beerData.abv})</p>
   </>
 );
 
