@@ -2,7 +2,7 @@ import React from 'react';
 
 const Item = ({ beerData, onClick }) => (
   <>
-    <p onClick={() => onClick(beerData)}>{beerData.name}({beerData.abv})</p>
+    <p onClick={() => onClick(beerData.id)}>{beerData.name}({beerData.abv})</p>
   </>
 );
 
