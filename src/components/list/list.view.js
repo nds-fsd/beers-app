@@ -9,6 +9,7 @@ const List = () => {
   const [openDetailsModal, setOpenDetailsModal] = useState(false);
   const [selectedBeer, setSelectedBeer] = useState();
   const [selectedPage, setSelectedPage] = useState(1);
+  const [filteredBeers, setFilteredBeers] = useState();
 
   useEffect(() => {
     request({ url: `/beers?page=${selectedPage}&per_page=25`, onSuccess: setListofBeers })
@@ -18,11 +19,31 @@ const List = () => {
     request({ url: `/beers?page=${selectedPage}&per_page=25`, onSuccess: setListofBeers })
   }, [selectedPage]);
 
-  /// FETCH PAGINATION
+  useEffect(() => {
+    if (listOfBeers) {
+      // setFilteredBeers(listOfBeers.filter(beer => {
+      //   const pattern = /India/ig;
+      //   const regex = new RegExp(pattern);
+      //   console.debug(beer.name);
+      //   return regex.test(beer.name);
+      // }));
+      setFilteredBeers(listOfBeers.map(beer => {
+        let icon = 'default-icon';
+
+        if (parseInt(beer.abv, 10) > 6) {
+          icon = 'major-6';
+        } else if (parseInt(beer.adv, 10) < 2) {
+          icon = 'minor-2';
+        }
+
+        return {...beer, icon };
+      }));
+    }
+  }, [listOfBeers]);
 
   return (
     <>
-      {listOfBeers ? listOfBeers.map(beer => (
+      {filteredBeers ? filteredBeers.map(beer => (
         <Item
           onClick={id => {
             setOpenDetailsModal(true);
